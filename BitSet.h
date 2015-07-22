@@ -7,18 +7,21 @@ public:
 	BitSet Union(const BitSet &other);
 	BitSet Intersect(const BitSet &other);
 	void Set(long member);
-	void IsMember(long member);
+	bool IsMember(long member);
 	void Invert();
 	BitSet Inverted();
 	int Count();
-	BitSet operator=(const BitSet &other);	
-	BitSet operator|(const BitSet &other);
+	void Print();
+	void operator=(const BitSet &other);	
+	BitSet & operator|(const BitSet &other);
 	void operator|=(const BitSet &other);
-	BitSet operator&(const BitSet &other);
+	BitSet & operator&(const BitSet &other);
 	void operator&=(const BitSet &other);
-	BitSet operator~();
+	BitSet & operator~();
 private:
 	uint64_t *bits;
+	int num;
+	int maxnum;
 };
 
 /* sample code 

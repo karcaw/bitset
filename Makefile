@@ -10,6 +10,9 @@ utils.o: utils.cpp
 
 test: test.o BitSet.o utils.o
 
+check: test
+	./test 1023
+
 clean: 
 	-rm *.o
 	-rm test
