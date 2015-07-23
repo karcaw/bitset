@@ -11,9 +11,8 @@ using namespace std;
 int main(int argc,char *argv[]) {
 	
 	uint64_t val;
-// 	BitSet a,c;
 	
-	BitSet b(300);
+	BitSet b(100);
 
 	val=strtol(argv[1],NULL,36);
 
@@ -26,17 +25,37 @@ int main(int argc,char *argv[]) {
 	
 	b.Set(10);
 	b.Set(20);
-	b.Set(150);
+	b.Set(100);
 	cout << "b's Count: " << b.Count() << endl;
 	b.Print();
 	cout << "IsMember 10: " << b.IsMember(10) << endl;
 	cout << "IsMember 15: " << b.IsMember(15) << endl;
-	BitSet a = b.Inverted();
+	BitSet a = ~b;
 	a.Print();
-	//a = BitSet(100);
-	//a.Set(5);
-	//a.Set(4);
-	//a.Set(3);
-	//c = a.Union(b);
+	
+	
+	BitSet c(100);
+	c.Set(5);
+	c.Set(4);
+	c.Set(100);
+	cout << endl << "Union Test" << endl;
+	c.Print();
+	b.Print();
+	BitSet d = c|b;
+	d.Print();
+	d |= a;
+	d.Print();
+
+	cout << endl << "Intersect Test" << endl;
+	c.Print();
+	b.PrintBinary();
+	BitSet e = c&b;
+	e.Print();
+	e &= a;
+	e.PrintBinary();
+
+	cout << endl << "Equality Test" << endl;
+	cout << (e==e) << endl;
+	cout << ((~a | ~b) == ~(a & b)) << endl;  // De Morgan's law
 	cout << "Done" << endl;
 }

@@ -12,12 +12,14 @@ public:
 	BitSet Inverted();
 	int Count();
 	void Print();
-	void operator=(const BitSet &other);	
-	BitSet & operator|(const BitSet &other);
+	void PrintBinary();
+	void operator=(const BitSet &other);
+	bool operator==(const BitSet &other);	
+	BitSet operator|(const BitSet &other);
 	void operator|=(const BitSet &other);
-	BitSet & operator&(const BitSet &other);
+	BitSet operator&(const BitSet &other);
 	void operator&=(const BitSet &other);
-	BitSet & operator~();
+	BitSet operator~();
 private:
 	uint64_t *bits;
 	int num;

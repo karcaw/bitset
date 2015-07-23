@@ -18,12 +18,28 @@ BitSet::BitSet(int size) {
 }
 
 BitSet::~BitSet() {
-	cout << "Death! " << bits << endl;
+	//cout << "Death! " << bits << endl;
 	delete [] bits;
 }
 
 BitSet BitSet::Union(const BitSet &other) {
+	BitSet result(maxnum);
+	
+	for(int chunk = 0; chunk < num ; chunk++) {
+	  result.bits[chunk] = bits[chunk] | other.bits[chunk];
+	}
+	
+	return result;
+}
 
+BitSet BitSet::Intersect(const BitSet &other) {
+  BitSet result(maxnum);
+	
+	for(int chunk = 0; chunk < num ; chunk++) {
+	  result.bits[chunk] = bits[chunk] & other.bits[chunk];
+	}
+	
+	return result;
 }
 
 void BitSet::Set(long member) {
@@ -39,8 +55,6 @@ bool BitSet::IsMember(long member) {
   int chunk = member / 64;
   
   return bits[chunk] & 1LL << bit ? 1 : 0;
-  
-
 }
 
 void BitSet::operator=(const BitSet &other) {
@@ -56,6 +70,15 @@ int BitSet::Count() {
     	count = count + __builtin_popcount(bits[i]);
   	}
   return count;
+}
+
+void BitSet::PrintBinary() {
+	for (int chunk=num-1; chunk>=0; chunk--) {
+		for (uint64_t loop=1LL<<63; loop; loop>>=1 ) {
+			cout << ((loop & bits[chunk]) ? "1":"0");
+		}
+	}
+	cout << endl;
 }
 
 void BitSet::Print() {
@@ -77,9 +100,43 @@ void BitSet::Invert() {
 
 BitSet BitSet::Inverted() {
 	BitSet other(maxnum);
-	cout << "Inverted" << endl;
+	//cout << "Inverted" << endl;
 	other = *this;
 	other.Invert();
-	cout << "Inverted2" << endl;
+	//cout << "Inverted2" << endl;
 	return other;
 }
+
+BitSet BitSet::operator|(const BitSet &other) {
+ 
+  	return (this->Union(other));
+}
+
+void BitSet::operator|=(const BitSet &other) {
+	for(int chunk = 0; chunk < num ; chunk++) {
+	  bits[chunk] |= other.bits[chunk];
+	}
+}
+
+BitSet BitSet::operator&(const BitSet &other) {
+	return (this->Intersect(other));
+}
+
+void BitSet::operator&=(const BitSet &other) {
+	for(int chunk = 0; chunk < num ; chunk++) {
+	  bits[chunk] &= other.bits[chunk];
+	}
+}
+
+BitSet BitSet::operator~() {
+	return this->Inverted();
+}
+
+bool BitSet::operator==(const BitSet &other){
+	for(int chunk = 0; chunk < num ; chunk++) {
+	  if (bits[chunk] != other.bits[chunk])
+	  	return false;
+	}
+	return true;
+}	
+
